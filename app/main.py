@@ -3,23 +3,20 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import analyze, applications, auth, jobs, resume
 from app.core.config import settings
-from app.core.database import Base, engine
-from app.models import models
 
-Base.metadata.create_all(bind=engine)
+# Refuse to start in production with a guessable signing key or a throwaway
+# SQLite file. Tables come from Alembic migrations (`alembic upgrade head`), not
+# from create_all() at import time - that shortcut is how the local database
+# drifted away from the migration history.
+settings.check_production_safety()
 
 app = FastAPI(title=settings.app_name)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        settings.frontend_origin,
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:3001",
-        "http://127.0.0.1:3001",
-    ],
-    allow_credentials=True,
+    allow_origins=settings.allowed_origins,
+    # Auth travels in the Authorization header, not in cookies.
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

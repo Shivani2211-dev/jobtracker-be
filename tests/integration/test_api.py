@@ -1,12 +1,3 @@
-import os
-from pathlib import Path
-
-os.environ["DATABASE_URL"] = "sqlite:///./test_jobtracker.db"
-
-test_db = Path("test_jobtracker.db")
-if test_db.exists():
-    test_db.unlink()
-
 from fastapi.testclient import TestClient
 
 from app.main import app

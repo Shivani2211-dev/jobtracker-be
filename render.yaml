@@ -1,0 +1,39 @@
+# Render Blueprint: the API plus a Postgres database.
+# Deploy with "New > Blueprint" in the Render dashboard, pointed at this repo.
+services:
+  - type: web
+    name: jobtracker-api
+    runtime: python
+    plan: free
+    region: virginia
+    buildCommand: pip install -r requirements.txt
+    # Migrations run before the server starts, so the schema always matches
+    # the code. The seed step is a no-op unless DEMO_PASSWORD is set.
+    startCommand: alembic upgrade head && python -m scripts.seed_demo && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: ENVIRONMENT
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: jobtracker-db
+          property: connectionString
+      # Set in the dashboard: the deployed frontend URL, e.g.
+      # https://jobtracker-fe.vercel.app (comma-separate several).
+      - key: FRONTEND_ORIGIN
+        sync: false
+      # Set in the dashboard to enable the demo account.
+      - key: DEMO_PASSWORD
+        sync: false
+
+databases:
+  - name: jobtracker-db
+    plan: free
+    region: virginia
+    databaseName: jobtracker
+    user: jobtracker
+    ipAllowList: []

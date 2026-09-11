@@ -10,8 +10,11 @@ from app.schemas.schemas import (
     CoverLetterRequest,
     CoverLetterResult,
     InterviewQuestionResult,
+    TailorRequest,
+    TailorResult,
 )
 from app.services.ai_service import analyze_resume_fit, generate_cover_letter, generate_interview_questions
+from app.services.tailor import tailor_resume
 
 router = APIRouter(prefix="/analyze", tags=["analyze"])
 
@@ -40,9 +43,18 @@ async def cover_letter(payload: CoverLetterRequest, current_user: User = Depends
         payload.company,
         payload.title,
         payload.resume_text or current_user.resume_text,
+        applicant_name=current_user.full_name,
     )
 
 
 @router.post("/interview-questions", response_model=InterviewQuestionResult)
 async def interview_questions(payload: AnalyzeRequest, current_user: User = Depends(get_current_user)):
     return await generate_interview_questions(payload.job_description, payload.resume_text or current_user.resume_text)
+
+
+@router.post("/tailor", response_model=TailorResult)
+async def tailor(payload: TailorRequest, current_user: User = Depends(get_current_user)):
+    resume = payload.resume_text or current_user.resume_text
+    if not resume or not resume.strip():
+        raise HTTPException(status_code=400, detail="Add your resume on the Profile page first.")
+    return await tailor_resume(payload.job_description, resume, payload.max_bullets)

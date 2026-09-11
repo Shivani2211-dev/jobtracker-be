@@ -117,7 +117,7 @@ def parse_resume_text(resume_text: str) -> ResumeParseResult:
     )
 
 
-async def generate_cover_letter(job_description: str, company: str, title: str, resume_text: str | None) -> CoverLetterResult:
+async def generate_cover_letter(job_description: str, company: str, title: str, resume_text: str | None, applicant_name: str | None = None) -> CoverLetterResult:
     analysis = await analyze_resume_fit(job_description, resume_text)
     strengths = " ".join(analysis.strengths[:3])
     return CoverLetterResult(
@@ -128,7 +128,7 @@ async def generate_cover_letter(job_description: str, company: str, title: str, 
             f"I would welcome the chance to bring a practical, impact-focused approach to {company} and contribute "
             f"quickly to the team.\n\n"
             "Sincerely,\n"
-            "Your Name"
+            f"{applicant_name or 'Your Name'}"
         )
     )
 

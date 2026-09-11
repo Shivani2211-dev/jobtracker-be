@@ -1,0 +1,30 @@
+[
+  {
+    "name": "frontend-to-platform",
+    "resume": "Jordan Lee\n- Built a component library of 30 React components in TypeScript used by four product teams.\n- Cut page load time by 45% by code-splitting a Next.js dashboard.\n- Wrote Jest and Playwright tests that run on every pull request in GitHub Actions.\n- Worked with designers to ship accessible forms that meet WCAG 2.1 AA.",
+    "job_description": "Frontend Engineer. React and TypeScript required. You will deploy services on Kubernetes and AWS. Experience with Playwright testing is a plus.",
+    "forbidden": ["kubernetes", "aws"],
+    "expected_missing": ["kubernetes", "aws"]
+  },
+  {
+    "name": "python-backend-to-java",
+    "resume": "Sam Patel\n- Designed REST APIs with FastAPI and PostgreSQL serving a scheduling product.\n- Moved slow report generation to Celery workers, cutting request time from 8 seconds to 900 ms.\n- Added Redis caching for dashboard queries used by every customer.\n- Containerized three services with Docker for local development.",
+    "job_description": "Backend Engineer (Java). Build microservices with Java and Spring Boot on AWS. PostgreSQL and Docker experience required. Kafka is a plus.",
+    "forbidden": ["spring boot", "java"],
+    "expected_missing": ["java", "spring boot", "aws", "kafka"]
+  },
+  {
+    "name": "data-science-to-mlops",
+    "resume": "Priya Shah\n- Trained scikit-learn and PyTorch models to predict customer churn with pandas pipelines.\n- Built a FastAPI service that serves model predictions to the product team.\n- Reduced training time by 30% by caching features in PostgreSQL.\n- Presented model results to non-technical stakeholders every sprint.",
+    "job_description": "ML Engineer. Python, PyTorch and FastAPI. Deploy models with Docker and Kubernetes on GCP. Terraform experience preferred.",
+    "forbidden": ["kubernetes", "terraform"],
+    "expected_missing": ["python", "docker", "kubernetes", "gcp", "terraform"]
+  },
+  {
+    "name": "new-grad-with-metrics",
+    "resume": "Chris Morgan\n- Built a course-registration web app with Django and PostgreSQL used by 1,200 students.\n- Wrote unit and integration tests with pytest, reaching 80% coverage.\n- Set up GitHub Actions to run tests and build a Docker image on every push.\n- Led a four-person team project using Git and code reviews.",
+    "job_description": "Junior Software Engineer. Django, PostgreSQL, Docker. Experience with React and AWS is a plus. Strong testing practices.",
+    "forbidden": ["react", "aws"],
+    "expected_missing": ["react", "aws"]
+  }
+]

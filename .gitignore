@@ -11,6 +11,7 @@ env/
 # Environment configuration
 .env
 .env.*
+!.env.example
 
 # Local tooling / IDE
 .pytest_cache/
